@@ -28,7 +28,7 @@ let
           subDir = "server";
           filter = path: type:
             builtins.all (x: x) [
-              (baseNameOf path != "package.yaml")
+              (baseNameOf path != "_package.yaml")
             ];
         };
       }
