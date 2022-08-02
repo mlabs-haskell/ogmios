@@ -28,7 +28,6 @@
     };
     cardano-node = {
       url = "github:input-output-hk/cardano-node/9f1d7dc163ee66410d912e48509d6a2300cfa68a";
-      flake = false;
     };
     cardano-prelude = {
       url = "github:input-output-hk/cardano-prelude/bb4ed71ba8e587f672d06edf9d2e376f4b055555";
@@ -160,5 +159,19 @@
       checks = perSystem (system: {
         inherit (self.flake.${system}.checks) "ogmios:test:unit";
       });
+
+      nixosModules.ogmios = { pkgs, lib, ... }: {
+        imports = [ ./nix/ogmios-nixos-module.nix ];
+        services.ogmios.package = lib.mkDefault self.flake.${pkgs.system}.packages."ogmios:exe:ogmios";
+      };
+
+      nixosConfigurations.test = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          inputs.cardano-node.nixosModules.cardano-node
+          self.nixosModules.ogmios
+          ./nix/test-nixos-configuration.nix
+        ];
+      };
     };
 }
