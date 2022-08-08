@@ -6,6 +6,9 @@
 
     nixpkgs.follows = "haskell-nix/nixpkgs-unstable";
 
+    # TODO: remove when nixpkgs is updated
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs";
+
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
@@ -138,7 +141,13 @@
         }
       );
 
-      apps = perSystem (system: self.flake.${system}.apps);
+      apps = perSystem (system:
+        self.flake.${system}.apps // {
+          vm = {
+            type = "app";
+            program = "${self.nixosConfigurations.test.config.system.build.vm}/bin/run-nixos-vm";
+          };
+        });
 
       devShell = perSystem (system: self.flake.${system}.devShell);
 
@@ -165,7 +174,7 @@
         services.ogmios.package = lib.mkDefault self.flake.${pkgs.system}.packages."ogmios:exe:ogmios";
       };
 
-      nixosConfigurations.test = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.test = inputs.nixpkgs-unstable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           inputs.cardano-node.nixosModules.cardano-node
