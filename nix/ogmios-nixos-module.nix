@@ -14,13 +14,13 @@ with lib; {
 
     user = mkOption {
       description = "User to run Ogmios service as.";
-      type = types.str;
+      type = str;
       default = "ogmios";
     };
 
     group = mkOption {
       description = "Group to run Ogmios service as.";
-      type = types.str;
+      type = str;
       default = "ogmios";
     };
 
