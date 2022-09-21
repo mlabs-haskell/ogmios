@@ -61,9 +61,9 @@ with lib; {
 
     # get configuration from cardano-node module if there is one
     services.ogmios = mkIf (config ? services.cardano-node && config.services.cardano-node.enable) {
-      nodeSocket = mkDefault config.services.cardano-node.socketPath;
+      nodeSocket = mkOptionDefault config.services.cardano-node.socketPath;
       # hacky way to get cardano-node config path from service
-      nodeConfig = mkDefault (builtins.head (
+      nodeConfig = mkOptionDefault (builtins.head (
         builtins.match ''.* (/nix/store/[a-zA-Z0-9]+-config-0-0\.json) .*''
           (builtins.readFile (builtins.replaceStrings [ " " ] [ "" ] config.systemd.services.cardano-node.serviceConfig.ExecStart))
       ));
