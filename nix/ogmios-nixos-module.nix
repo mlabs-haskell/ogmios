@@ -27,6 +27,7 @@ with lib; {
     nodeSocket = mkOption {
       description = "Path to cardano-node IPC socket.";
       type = str;
+      default = "/run/cardano-node/node.socket";
     };
 
     nodeConfig = mkOption {
@@ -56,12 +57,11 @@ with lib; {
   config = mkIf cfg.enable {
     assertions = mkIf (config ? services.cardano-node && config.services.cardano-node.enable) [{
       assertion = config.services.cardano-node.systemdSocketActivation;
-      message = "The option services.cardano-node.systemdSocketActivation needs to be enabled to use Ogmios with the cardano-node configured by that module.";
+      message = "The option services.cardano-node.systemdSocketActivation needs to be enabled to use Ogmios with the cardano-node configured by that module. Otherwise cardano-node socket has wrong permissions.";
     }];
 
     # get configuration from cardano-node module if there is one
     services.ogmios = mkIf (config ? services.cardano-node && config.services.cardano-node.enable) {
-      nodeSocket = mkOptionDefault config.services.cardano-node.socketPath;
       # hacky way to get cardano-node config path from service
       nodeConfig = mkOptionDefault (builtins.head (
         builtins.match ''.* (/nix/store/[a-zA-Z0-9]+-config-0-0\.json) .*''
