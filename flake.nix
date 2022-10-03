@@ -6,15 +6,14 @@
 
     nixpkgs.follows = "haskell-nix/nixpkgs-unstable";
 
-    # TODO: remove when nixpkgs is updated
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs";
-
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
     };
 
     iohk-nix.url = "github:input-output-hk/iohk-nix/cecab9c71d1064f05f1615eead56ac0b9196bc20";
+
+    cardano-node.url = "github:input-output-hk/cardano-node/9f1d7dc163ee66410d912e48509d6a2300cfa68a";
 
     # all inputs below here are for use with haskell.nix
     cardano-base = {
@@ -28,9 +27,6 @@
     cardano-ledger = {
       url = "github:input-output-hk/cardano-ledger/ce3057e0863304ccb3f79d78c77136219dc786c6";
       flake = false;
-    };
-    cardano-node = {
-      url = "github:input-output-hk/cardano-node/9f1d7dc163ee66410d912e48509d6a2300cfa68a";
     };
     cardano-prelude = {
       url = "github:input-output-hk/cardano-prelude/bb4ed71ba8e587f672d06edf9d2e376f4b055555";
@@ -174,7 +170,7 @@
         services.ogmios.package = lib.mkDefault self.flake.${pkgs.system}.packages."ogmios:exe:ogmios";
       };
 
-      nixosConfigurations.test = inputs.nixpkgs-unstable.lib.nixosSystem {
+      nixosConfigurations.test = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           inputs.cardano-node.nixosModules.cardano-node
