@@ -167,7 +167,7 @@
 
       nixosModules.ogmios = { pkgs, lib, ... }: {
         imports = [ ./nix/ogmios-nixos-module.nix ];
-        services.ogmios.package = lib.mkDefault self.flake.${pkgs.system}.packages."ogmios:exe:ogmios";
+        nixpkgs.overlays = [ (_: _: { ogmios = self.flake.${pkgs.system}.packages."ogmios:exe:ogmios"; }) ];
       };
 
       nixosConfigurations.test = nixpkgs.lib.nixosSystem {
