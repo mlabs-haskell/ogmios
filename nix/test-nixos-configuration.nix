@@ -2,6 +2,8 @@
 # nix run '.#vm'
 { config, modulesPath, pkgs, ... }:
 {
+  # Virtual Machine configuration
+
   imports = [ "${modulesPath}/virtualisation/qemu-vm.nix" ];
 
   virtualisation = {
@@ -13,7 +15,9 @@
     ];
   };
 
-  # WARNING: root access with empty password for debugging via console and ssh
+  # Easy debugging via console and ssh
+  # WARNING: root access with empty password
+
   networking.firewall.enable = false;
   services.getty.autologinUser = "root";
   services.openssh.enable = true;
@@ -21,7 +25,8 @@
   users.extraUsers.root.password = "";
   users.mutableUsers = false;
 
-  # cardano-node and ogmios configuration
+  # Example cardano-node and ogmios configuration
+
   services.cardano-node.enable = true;
   services.cardano-node.systemdSocketActivation = true;
   services.ogmios.enable = true;
