@@ -61,15 +61,6 @@ with lib; {
       message = "The option services.cardano-node.systemdSocketActivation needs to be enabled to use Ogmios with the cardano-node configured by that module. Otherwise cardano-node socket has wrong permissions.";
     }];
 
-    # get configuration from cardano-node module if there is one
-    services.ogmios = mkIf (config ? services.cardano-node && config.services.cardano-node.enable) {
-      # hacky way to get cardano-node config path from service
-      nodeConfig = mkOptionDefault (builtins.head (
-        builtins.match ''.* (/nix/store/[a-zA-Z0-9]+-config-0-0\.json) .*''
-          (builtins.readFile (builtins.replaceStrings [ " " ] [ "" ] config.systemd.services.cardano-node.serviceConfig.ExecStart))
-      ));
-    };
-
     users.users.ogmios = mkIf (cfg.user == "ogmios") {
       isSystemUser = true;
       group = cfg.group;
@@ -85,7 +76,7 @@ with lib; {
       script = escapeShellArgs (concatLists [
         [ "${cfg.package}/bin/ogmios" ]
         [ "--node-socket" cfg.nodeSocket ]
-        [ "--node-config" cfg.nodeConfig ]
+        [ "--node-config" config.services.cardano-node.nodeConfigFile ]
         [ "--host" cfg.host ]
         [ "--port" cfg.port ]
         cfg.extraArgs
