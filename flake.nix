@@ -13,7 +13,8 @@
 
     iohk-nix.url = "github:input-output-hk/iohk-nix/cecab9c71d1064f05f1615eead56ac0b9196bc20";
 
-    cardano-node.url = "github:input-output-hk/cardano-node/9f1d7dc163ee66410d912e48509d6a2300cfa68a";
+    #cardano-node.url = "github:input-output-hk/cardano-node/a0b000380a32155feb62d3bfd73513243c98a4f6";
+    cardano-node.url = "github:mlabs-haskell/cardano-node";
 
     # all inputs below here are for use with haskell.nix
     cardano-base = {
