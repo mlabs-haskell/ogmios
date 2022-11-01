@@ -164,7 +164,7 @@
         "type": "github"
       }
     },
-    "hackage-nix": {
+    "hackage": {
       "flake": false,
       "locked": {
         "lastModified": 1667265089,
@@ -190,9 +190,7 @@
         "flake-compat": "flake-compat_2",
         "flake-utils": "flake-utils",
         "ghc-8.6.5-iohk": "ghc-8.6.5-iohk",
-        "hackage": [
-          "hackage-nix"
-        ],
+        "hackage": "hackage",
         "hpc-coveralls": "hpc-coveralls",
         "hydra": "hydra",
         "nixpkgs": [
@@ -448,7 +446,6 @@
       "inputs": {
         "CHaP": "CHaP",
         "flake-compat": "flake-compat",
-        "hackage-nix": "hackage-nix",
         "haskell-nix": "haskell-nix",
         "iohk-nix": "iohk-nix",
         "nixpkgs": [

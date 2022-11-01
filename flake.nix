@@ -5,15 +5,9 @@
     haskell-nix = {
       url = "github:input-output-hk/haskell.nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.hackage.follows = "hackage-nix";
     };
 
     nixpkgs.follows = "haskell-nix/nixpkgs-unstable";
-
-    hackage-nix = {
-      url = "github:input-output-hk/hackage.nix";
-      flake = false;
-    };
 
     iohk-nix = {
       url = "github:input-output-hk/iohk-nix/cecab9c71d1064f05f1615eead56ac0b9196bc20";
@@ -25,7 +19,6 @@
       flake = false;
     };
 
-    # all inputs below here are for pinning with haskell.nix
     CHaP = {
       url = "github:input-output-hk/cardano-haskell-packages/b074321c4c8cbf2c3789436ab11eaa43e1c441a7";
       flake = false;
@@ -56,7 +49,7 @@
           pkgs = nixpkgsFor system;
           src = ./.;
         in
-        import ./nix/default.nix {
+        import ./nix {
           inherit src inputs pkgs system static;
           inputMap = {
             "https://input-output-hk.github.io/cardano-haskell-packages" = CHaP;

@@ -81,12 +81,12 @@ constraints:
     hedgehog >= 1.1
   , bimap >= 0.4.0
   , libsystemd-journal >= 1.4.4
-  , relude == 0.7.0.0
-  , graphviz >= 2999.20.1.0
   , systemd >= 2.3.0
     -- systemd-2.3.0 requires at least network 3.1.1.0 but it doesn't declare
     -- that dependency
   , network >= 3.1.1.0
+  , relude == 0.7.0.0
+  , graphviz >= 2999.20.1.0
   , HSOpenSSL >= 0.11.7.2
   , algebraic-graphs < 0.7
   , protolude < 0.3.1
