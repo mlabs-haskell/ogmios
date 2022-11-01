@@ -13,7 +13,16 @@
 
     iohk-nix.url = "github:input-output-hk/iohk-nix/cecab9c71d1064f05f1615eead56ac0b9196bc20";
 
-    cardano-node.url = "github:input-output-hk/cardano-node/9f1d7dc163ee66410d912e48509d6a2300cfa68a";
+    empty-flake.url = "github:input-output-hk/empty-flake?rev=2040a05b67bf9a669ce17eca56beb14b4206a99a";
+    cardano-node-workbench = {
+      url = "github:input-output-hk/cardano-node/ed9932c52aaa535b71f72a5b4cc0cecb3344a5a3";
+      inputs.membench.follows = "empty-flake";
+    };
+    cardano-node = {
+      url = "github:input-output-hk/cardano-node?ref=1.35.3";
+      inputs.cardano-node-workbench.follows = "cardano-node-workbench";
+      inputs.node-measured.follows = "cardano-node-workbench";
+    };
 
     # all inputs below here are for use with haskell.nix
     cardano-base = {
