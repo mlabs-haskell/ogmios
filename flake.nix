@@ -9,14 +9,6 @@
 
     nixpkgs.follows = "haskell-nix/nixpkgs-unstable";
 
-    # TODO: cleanup after cardano-node inputs are fixed
-    cardano-node = {
-      url = "github:input-output-hk/cardano-node/1.35.3";
-      inputs.cardano-node-workbench.follows = "blank";
-      inputs.node-measured.follows = "blank";
-    };
-    blank.url = "github:divnix/blank";
-
     iohk-nix = {
       url = "github:input-output-hk/iohk-nix/cecab9c71d1064f05f1615eead56ac0b9196bc20";
       inputs.nixpkgs.follows = "nixpkgs";
