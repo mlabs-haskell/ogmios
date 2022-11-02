@@ -2,6 +2,7 @@
 , inputs
 , pkgs
 , static
+, inputMap
 , ...
 }:
 
@@ -11,7 +12,7 @@ let
   pkgSet = if static then musl64 else pkgs;
 
   project = {
-    inherit src;
+    inherit src inputMap;
 
     name = "ogmios";
 
