@@ -27,13 +27,13 @@ with lib; {
 
     nodeSocket = mkOption {
       description = "Path to cardano-node IPC socket.";
-      type = str;
+      type = path;
       default = "/run/cardano-node/node.socket";
     };
 
     nodeConfig = mkOption {
       description = "Path to cardano-node config.json file.";
-      type = str;
+      type = path;
     };
 
     host = mkOption {
@@ -56,8 +56,8 @@ with lib; {
   };
 
   config = mkIf cfg.enable {
-    assertions = mkIf (config ? services.cardano-node && config.services.cardano-node.enable) [{
-      assertion = config.services.cardano-node.systemdSocketActivation;
+    assertions = [{
+      assertion = config.services.cardano-node.enable or false -> config.services.cardano-node.systemdSocketActivation;
       message = "The option services.cardano-node.systemdSocketActivation needs to be enabled to use Ogmios with the cardano-node configured by that module. Otherwise cardano-node socket has wrong permissions.";
     }];
 
