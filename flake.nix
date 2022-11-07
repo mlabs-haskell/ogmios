@@ -75,7 +75,13 @@
         }
       );
 
-      apps = perSystem (system: self.flake.${system}.apps);
+      apps = perSystem (system:
+        self.flake.${system}.apps // {
+          vm = {
+            type = "app";
+            program = "${self.nixosConfigurations.test.config.system.build.vm}/bin/run-nixos-vm";
+          };
+        });
 
       devShell = perSystem (system: self.flake.${system}.devShell);
 
@@ -96,5 +102,19 @@
       checks = perSystem (system: {
         inherit (self.flake.${system}.checks) "ogmios:test:unit";
       });
+
+      nixosModules.ogmios = { pkgs, ... }: {
+        imports = [ ./nix/ogmios-nixos-module.nix ];
+        nixpkgs.overlays = [ (_: _: { ogmios = self.flake.${pkgs.system}.packages."ogmios:exe:ogmios"; }) ];
+      };
+
+      nixosConfigurations.test = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          inputs.cardano-node.nixosModules.cardano-node
+          self.nixosModules.ogmios
+          ./nix/test-nixos-configuration.nix
+        ];
+      };
     };
 }
