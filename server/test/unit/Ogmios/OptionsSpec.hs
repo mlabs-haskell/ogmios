@@ -107,24 +107,6 @@ spec = parallel $ do
             networkMagic  params `shouldBe` NetworkMagic 1097911063
             systemStart   params `shouldBe` mkSystemStart 1563999616
             slotsPerEpoch params `shouldBe` EpochSlots 21600
-
-        specify "vasil-dev" $ do
-            params <- parseNetworkParameters vasilConfig
-            networkMagic  params `shouldBe` NetworkMagic 9
-            systemStart   params `shouldBe` mkSystemStart 1659636000
-            slotsPerEpoch params `shouldBe` EpochSlots 360
-
-        specify "preview" $ do
-            params <- parseNetworkParameters =<< getConfigFile "preview"
-            networkMagic  params `shouldBe` NetworkMagic 2
-            systemStart   params `shouldBe` mkSystemStart 1660003200
-            slotsPerEpoch params `shouldBe` EpochSlots 4320
-
-        specify "preprod" $ do
-            params <- parseNetworkParameters =<< getConfigFile "preprod"
-            networkMagic  params `shouldBe` NetworkMagic 1
-            systemStart   params `shouldBe` mkSystemStart 1654041600
-            slotsPerEpoch params `shouldBe` EpochSlots 21600
   where
     liftGetConfigFile = runIO . getConfigFile
     matrix =
