@@ -70,6 +70,7 @@ N/A
 #### Added
 
 - Missing JSON specification (and therefore, documentation) for `collectErrors`. See [#244](https://github.com/CardanoSolutions/ogmios/issues/244).
+- NixOS module for Ogmios server. See [nix/test-nixos-configuration.nix](nix/test-nixos-configuration.nix) for example usage.
 
 #### Changed
 
