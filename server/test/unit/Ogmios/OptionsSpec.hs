@@ -13,7 +13,8 @@ module Ogmios.OptionsSpec
 import Ogmios.Prelude
 
 import Data.List
-    ( isInfixOf )
+    ( isInfixOf
+    )
 import Ogmios.App.Configuration
     ( Configuration (..)
     , EpochSlots (..)
@@ -22,7 +23,10 @@ import Ogmios.App.Configuration
     , mkSystemStart
     )
 import Ogmios.Control.MonadLog
-    ( Severity (..), TracerDefinition (..), defaultTracers )
+    ( Severity (..)
+    , TracerDefinition (..)
+    , defaultTracers
+    )
 import Ogmios.Options
     ( Command (..)
     , Tracers (..)
@@ -31,9 +35,11 @@ import Ogmios.Options
     , parseOptionsPure
     )
 import Paths_ogmios
-    ( getDataFileName )
+    ( getDataFileName
+    )
 import System.Environment
-    ( withArgs )
+    ( withArgs
+    )
 import Test.Hspec
     ( Expectation
     , Spec
@@ -101,12 +107,6 @@ spec = parallel $ do
             networkMagic  params `shouldBe` NetworkMagic 1097911063
             systemStart   params `shouldBe` mkSystemStart 1563999616
             slotsPerEpoch params `shouldBe` EpochSlots 21600
-
-        specify "vasil-dev" $ do
-            params <- parseNetworkParameters vasilConfig
-            networkMagic  params `shouldBe` NetworkMagic 9
-            systemStart   params `shouldBe` mkSystemStart 1654524000
-            slotsPerEpoch params `shouldBe` EpochSlots 360
   where
     liftGetConfigFile = runIO . getConfigFile
     matrix =
