@@ -365,6 +365,22 @@
         "type": "github"
       }
     },
+    "cardano-configurations": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1667387423,
+        "narHash": "sha256-oOycxAu9kARfyUvkdjeq80Em7b+vP9XsBii8836f9yQ=",
+        "owner": "input-output-hk",
+        "repo": "cardano-configurations",
+        "rev": "c0d11b5ff0c0200da00a50c17c38d9fd752ba532",
+        "type": "github"
+      },
+      "original": {
+        "owner": "input-output-hk",
+        "repo": "cardano-configurations",
+        "type": "github"
+      }
+    },
     "cardano-mainnet-mirror": {
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -2555,6 +2571,7 @@
       "inputs": {
         "CHaP": "CHaP",
         "blank": "blank",
+        "cardano-configurations": "cardano-configurations",
         "cardano-node": "cardano-node",
         "flake-compat": "flake-compat_2",
         "haskell-nix": "haskell-nix",

@@ -27,8 +27,14 @@
 
   # Example cardano-node and ogmios configuration
 
-  services.cardano-node.enable = true;
-  services.cardano-node.systemdSocketActivation = true;
-  services.ogmios.enable = true;
-  services.ogmios.host = "0.0.0.0";
+  services.cardano-node = {
+    enable = true;
+    systemdSocketActivation = true;
+    nodeConfigFile = "${pkgs.cardano-configurations}/network/preview/cardano-node/config.json";
+    topology = "${pkgs.cardano-configurations}/network/preview/cardano-node/topology.json";
+  };
+  services.ogmios = {
+    enable = true;
+    host = "0.0.0.0";
+  };
 }

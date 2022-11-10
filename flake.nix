@@ -17,6 +17,12 @@
     };
     blank.url = "github:divnix/blank";
 
+    # TODO: remove after new testnets land in cardano-node
+    cardano-configurations = {
+      url = "github:input-output-hk/cardano-configurations";
+      flake = false;
+    };
+
     iohk-nix = {
       url = "github:input-output-hk/iohk-nix/cecab9c71d1064f05f1615eead56ac0b9196bc20";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -113,7 +119,12 @@
 
       nixosModules.ogmios = { pkgs, ... }: {
         imports = [ ./nix/ogmios-nixos-module.nix ];
-        nixpkgs.overlays = [ (_: _: { ogmios = self.flake.${pkgs.system}.packages."ogmios:exe:ogmios"; }) ];
+        nixpkgs.overlays = [
+          (_: _: {
+            ogmios = self.flake.${pkgs.system}.packages."ogmios:exe:ogmios";
+            inherit (inputs) cardano-configurations;
+          })
+        ];
       };
 
       nixosConfigurations.test = nixpkgs.lib.nixosSystem {
