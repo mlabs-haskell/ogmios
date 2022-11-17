@@ -86,6 +86,11 @@
         self.flake.${system}.packages // {
           ogmios-static =
             self.flake-static.${system}.packages."ogmios:exe:ogmios";
+          dockerImage = (nixpkgsFor system).dockerTools.buildLayeredImage {
+            name = "ogmios";
+            tag = "latest";
+            contents = [ self.flake.${system}.packages."ogmios:exe:ogmios" ];
+          };
         }
       );
 
