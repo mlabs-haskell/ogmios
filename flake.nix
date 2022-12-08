@@ -9,6 +9,20 @@
 
     nixpkgs.follows = "haskell-nix/nixpkgs-unstable";
 
+    # TODO: cleanup after cardano-node inputs are fixed
+    cardano-node = {
+      url = "github:input-output-hk/cardano-node/1.35.4";
+      inputs.cardano-node-workbench.follows = "blank";
+      inputs.node-measured.follows = "blank";
+    };
+    blank.url = "github:divnix/blank";
+
+    # TODO: remove after new testnets land in cardano-node
+    cardano-configurations = {
+      url = "github:input-output-hk/cardano-configurations";
+      flake = false;
+    };
+
     iohk-nix = {
       url = "github:input-output-hk/iohk-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -105,7 +119,12 @@
 
       nixosModules.ogmios = { pkgs, ... }: {
         imports = [ ./nix/ogmios-nixos-module.nix ];
-        nixpkgs.overlays = [ (_: _: { ogmios = self.flake.${pkgs.system}.packages."ogmios:exe:ogmios"; }) ];
+        nixpkgs.overlays = [
+          (_: _: {
+            ogmios = self.flake.${pkgs.system}.packages."ogmios:exe:ogmios";
+            inherit (inputs) cardano-configurations;
+          })
+        ];
       };
 
       nixosConfigurations.test = nixpkgs.lib.nixosSystem {

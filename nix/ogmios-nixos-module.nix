@@ -34,6 +34,7 @@ with lib; {
     nodeConfig = mkOption {
       description = "Path to cardano-node config.json file.";
       type = path;
+      default = if (config.services.cardano-node.enable or false) then config.services.cardano-node.nodeConfigFile else null;
     };
 
     host = mkOption {
@@ -76,7 +77,7 @@ with lib; {
       script = escapeShellArgs (concatLists [
         [ "${cfg.package}/bin/ogmios" ]
         [ "--node-socket" cfg.nodeSocket ]
-        [ "--node-config" config.services.cardano-node.nodeConfigFile ]
+        [ "--node-config" cfg.nodeConfig ]
         [ "--host" cfg.host ]
         [ "--port" cfg.port ]
         cfg.extraArgs
