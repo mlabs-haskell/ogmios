@@ -150,5 +150,6 @@
           installPhase = "mkdir $out";
         };
       };
+      herculesCI.cySystems = [ "x86_64-linux" ];
     };
 }
