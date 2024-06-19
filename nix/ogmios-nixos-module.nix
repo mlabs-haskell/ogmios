@@ -57,11 +57,6 @@ with lib; {
   };
 
   config = mkIf cfg.enable {
-    assertions = [{
-      assertion = config.services.cardano-node.enable or false -> config.services.cardano-node.systemdSocketActivation;
-      message = "The option services.cardano-node.systemdSocketActivation needs to be enabled to use Ogmios with the cardano-node configured by that module. Otherwise cardano-node socket has wrong permissions.";
-    }];
-
     users.users.ogmios = mkIf (cfg.user == "ogmios") {
       isSystemUser = true;
       group = cfg.group;
